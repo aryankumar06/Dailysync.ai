@@ -287,10 +287,12 @@ export default function TaskSection({ selectedDate }: TaskSectionProps) {
           <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Tasks</h2>
           
           {/* View Mode Toggle - Simplified and explicit */}
-          <div className="flex items-center ml-2 bg-gray-100 dark:bg-neutral-800 rounded-lg p-1 border border-gray-200 dark:border-neutral-700">
+          <div className="flex items-center ml-2 bg-gray-100 dark:bg-neutral-800 rounded-lg p-1 border border-gray-200 dark:border-neutral-700" role="group" aria-label="Task view mode">
             <button
+              type="button"
               onClick={() => setViewMode('list')}
-              className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${
+              aria-pressed={viewMode === 'list'}
+              className={`px-3 py-1 rounded-md text-xs font-bold transition-all focus-visible:ring-2 focus-visible:ring-blue-500 ${
                 viewMode === 'list' 
                   ? 'bg-blue-600 text-white shadow-sm' 
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
@@ -299,8 +301,10 @@ export default function TaskSection({ selectedDate }: TaskSectionProps) {
               List
             </button>
             <button
+              type="button"
               onClick={() => setViewMode('plan')}
-              className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${
+              aria-pressed={viewMode === 'plan'}
+              className={`px-3 py-1 rounded-md text-xs font-bold transition-all focus-visible:ring-2 focus-visible:ring-blue-500 ${
                 viewMode === 'plan' 
                   ? 'bg-blue-600 text-white shadow-sm' 
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
@@ -313,7 +317,9 @@ export default function TaskSection({ selectedDate }: TaskSectionProps) {
 
         <button
           onClick={() => setShowForm(!showForm)}
-          className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
+          aria-expanded={showForm}
+          aria-controls="task-form"
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-800"
         >
           <Plus className="w-4 h-4" />
           {showForm ? 'Close Form' : 'Add Task'}
@@ -329,6 +335,7 @@ export default function TaskSection({ selectedDate }: TaskSectionProps) {
       <AnimatePresence mode="wait">
         {showForm && (
           <motion.form 
+            id="task-form"
             onSubmit={handleSubmit} 
             className="mb-6 p-4 bg-gray-50 dark:bg-neutral-900/30 rounded-lg space-y-4"
             initial={{ opacity: 0, height: 0 }}
@@ -687,14 +694,14 @@ function TaskItem({
         <div className="flex items-center gap-1">
           <button
             onClick={() => onEdit(task)}
-            className="p-2 text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-neutral-800 rounded transition-colors"
+            className="p-2 text-gray-400 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-neutral-800 rounded transition-colors focus-visible:ring-2 focus-visible:ring-blue-500"
             aria-label={`Edit task: ${task.title}`}
           >
             <Edit2 className="w-4 h-4" />
           </button>
           <button
             onClick={() => onDelete(task.id)}
-            className="p-2 text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-neutral-800 rounded transition-colors"
+            className="p-2 text-gray-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-neutral-800 rounded transition-colors focus-visible:ring-2 focus-visible:ring-red-500"
             aria-label={`Delete task: ${task.title}`}
           >
             <Trash2 className="w-4 h-4" />
