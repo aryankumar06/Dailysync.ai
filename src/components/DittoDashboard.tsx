@@ -44,6 +44,8 @@ export default function DittoDashboard() {
       <div className="mb-6 flex items-center justify-end">
         <button
           onClick={() => setShowAddForm(!showAddForm)}
+          aria-expanded={showAddForm}
+          aria-controls="add-project-form"
           className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
         >
           <Plus className="w-4 h-4" />
@@ -55,6 +57,7 @@ export default function DittoDashboard() {
       <AnimatePresence>
         {showAddForm && (
           <motion.div
+            id="add-project-form"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -63,10 +66,11 @@ export default function DittoDashboard() {
             <div className="bg-white dark:bg-neutral-800 rounded-xl shadow-sm border border-gray-200 dark:border-neutral-700 p-6">
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label htmlFor="project-title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Project Title *
                   </label>
                   <input
+                    id="project-title"
                     type="text"
                     value={newProjectTitle}
                     onChange={(e) => setNewProjectTitle(e.target.value)}
@@ -83,10 +87,11 @@ export default function DittoDashboard() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label htmlFor="project-description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Description
                   </label>
                   <textarea
+                    id="project-description"
                     value={newProjectDescription}
                     onChange={(e) => setNewProjectDescription(e.target.value)}
                     placeholder="Enter project description..."
@@ -96,15 +101,17 @@ export default function DittoDashboard() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label id="priority-label" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Priority
                   </label>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2" role="group" aria-labelledby="priority-label">
                     {(['low', 'medium', 'high'] as const).map((priority) => (
                       <button
                         key={priority}
+                        type="button"
+                        aria-pressed={newProjectPriority === priority}
                         onClick={() => setNewProjectPriority(priority)}
-                        className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                        className={`px-4 py-2 rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
                           newProjectPriority === priority
                             ? priority === 'high'
                               ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
