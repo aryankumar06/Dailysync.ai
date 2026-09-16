@@ -296,7 +296,11 @@ export default function InboxView() {
             </div>
 
             {/* Filters */}
-            <div className="flex flex-wrap items-center gap-2 bg-white dark:bg-neutral-900 p-1.5 rounded-xl border border-gray-200 dark:border-neutral-800">
+            <div
+                className="flex flex-wrap items-center gap-2 bg-white dark:bg-neutral-900 p-1.5 rounded-xl border border-gray-200 dark:border-neutral-800"
+                role="group"
+                aria-label="Notification filters"
+            >
                 <FilterBtn active={filter === 'all'} label="All" count={notifications.length} onClick={() => setFilter('all')} />
                 <FilterBtn active={filter === 'alert'} label="Alerts" count={notifications.filter(n => n.type === 'alert').length} onClick={() => setFilter('alert')} />
                 <FilterBtn active={filter === 'invite'} label="Invites" count={notifications.filter(n => n.type === 'invite').length} onClick={() => setFilter('invite')} />
@@ -429,8 +433,10 @@ interface FilterBtnProps {
 function FilterBtn({ active, label, count, onClick }: FilterBtnProps) {
     return (
         <button 
+            type="button"
+            aria-pressed={active}
             onClick={onClick}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none ${
                 active 
                     ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' 
                     : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
