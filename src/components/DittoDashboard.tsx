@@ -44,7 +44,9 @@ export default function DittoDashboard() {
       <div className="mb-6 flex items-center justify-end">
         <button
           onClick={() => setShowAddForm(!showAddForm)}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-900"
+          aria-expanded={showAddForm}
+          aria-controls="add-project-form"
         >
           <Plus className="w-4 h-4" />
           {showAddForm ? 'Cancel' : 'Add Project'}
@@ -58,6 +60,7 @@ export default function DittoDashboard() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
+            id="add-project-form"
             className="mb-6 overflow-hidden"
           >
             <div className="bg-white dark:bg-neutral-800 rounded-xl shadow-sm border border-gray-200 dark:border-neutral-700 p-6">
@@ -96,13 +99,15 @@ export default function DittoDashboard() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label id="priority-label" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Priority
                   </label>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2" role="group" aria-labelledby="priority-label">
                     {(['low', 'medium', 'high'] as const).map((priority) => (
                       <button
                         key={priority}
+                        type="button"
+                        aria-pressed={newProjectPriority === priority}
                         onClick={() => setNewProjectPriority(priority)}
                         className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                           newProjectPriority === priority
@@ -112,7 +117,7 @@ export default function DittoDashboard() {
                                 ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
                                 : 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
                             : 'bg-gray-100 text-gray-700 dark:bg-neutral-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-neutral-600'
-                        }`}
+                        } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500`}
                       >
                         {priority.charAt(0).toUpperCase() + priority.slice(1)}
                       </button>
@@ -122,15 +127,17 @@ export default function DittoDashboard() {
 
                 <div className="flex gap-3 pt-2">
                   <button
+                    type="button"
                     onClick={handleAddProject}
                     disabled={!newProjectTitle.trim()}
-                    className="px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white rounded-lg transition-colors font-medium"
+                    className="px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white rounded-lg transition-colors font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-900"
                   >
                     Create Project
                   </button>
                   <button
+                    type="button"
                     onClick={() => setShowAddForm(false)}
-                    className="px-6 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-neutral-700 dark:hover:bg-neutral-600 text-gray-700 dark:text-gray-300 rounded-lg transition-colors font-medium"
+                    className="px-6 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-neutral-700 dark:hover:bg-neutral-600 text-gray-700 dark:text-gray-300 rounded-lg transition-colors font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-900"
                   >
                     Cancel
                   </button>
