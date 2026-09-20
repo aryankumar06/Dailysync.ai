@@ -287,10 +287,12 @@ export default function TaskSection({ selectedDate }: TaskSectionProps) {
           <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Tasks</h2>
           
           {/* View Mode Toggle - Simplified and explicit */}
-          <div className="flex items-center ml-2 bg-gray-100 dark:bg-neutral-800 rounded-lg p-1 border border-gray-200 dark:border-neutral-700">
+          <div role="group" aria-label="View mode" className="flex items-center ml-2 bg-gray-100 dark:bg-neutral-800 rounded-lg p-1 border border-gray-200 dark:border-neutral-700">
             <button
+              type="button"
               onClick={() => setViewMode('list')}
-              className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${
+              aria-pressed={viewMode === 'list'}
+              className={`px-3 py-1 rounded-md text-xs font-bold transition-all focus-visible:ring-2 focus-visible:outline-none ${
                 viewMode === 'list' 
                   ? 'bg-blue-600 text-white shadow-sm' 
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
@@ -299,8 +301,10 @@ export default function TaskSection({ selectedDate }: TaskSectionProps) {
               List
             </button>
             <button
+              type="button"
               onClick={() => setViewMode('plan')}
-              className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${
+              aria-pressed={viewMode === 'plan'}
+              className={`px-3 py-1 rounded-md text-xs font-bold transition-all focus-visible:ring-2 focus-visible:outline-none ${
                 viewMode === 'plan' 
                   ? 'bg-blue-600 text-white shadow-sm' 
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
@@ -313,7 +317,9 @@ export default function TaskSection({ selectedDate }: TaskSectionProps) {
 
         <button
           onClick={() => setShowForm(!showForm)}
-          className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
+          aria-expanded={showForm}
+          aria-controls="task-form"
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium focus-visible:ring-2 focus-visible:outline-none"
         >
           <Plus className="w-4 h-4" />
           {showForm ? 'Close Form' : 'Add Task'}
@@ -329,6 +335,7 @@ export default function TaskSection({ selectedDate }: TaskSectionProps) {
       <AnimatePresence mode="wait">
         {showForm && (
           <motion.form 
+            id="task-form"
             onSubmit={handleSubmit} 
             className="mb-6 p-4 bg-gray-50 dark:bg-neutral-900/30 rounded-lg space-y-4"
             initial={{ opacity: 0, height: 0 }}
@@ -593,8 +600,10 @@ function TaskItem({
     >
       <div className="flex items-start gap-3">
         <button
+          role="switch"
+          aria-checked={task.status === 'completed'}
           onClick={() => onToggle(task)}
-          className="mt-1 flex-shrink-0"
+          className="mt-1 flex-shrink-0 focus-visible:ring-2 focus-visible:outline-none rounded"
           aria-label={task.status === 'completed' ? `Mark incomplete: ${task.title}` : `Mark complete: ${task.title}`}
         >
           {task.status === 'completed' ? (
@@ -638,8 +647,12 @@ function TaskItem({
               </span>
             )}
             <button 
+                type="button"
                 onClick={() => setShowComments(!showComments)}
-                className="text-xs text-gray-500 hover:text-blue-500 flex items-center gap-1 transition-colors"
+                aria-expanded={showComments}
+                aria-controls={`comments-section-${task.id}`}
+                aria-label={`Comments for task: ${task.title}`}
+                className="text-xs text-gray-500 hover:text-blue-500 flex items-center gap-1 transition-colors focus-visible:ring-2 focus-visible:outline-none rounded p-0.5"
                 title="View Comments"
             >
                 <MessageSquare className="w-3 h-3" />
@@ -651,6 +664,7 @@ function TaskItem({
           <AnimatePresence>
             {showComments && (
               <motion.div 
+                id={`comments-section-${task.id}`}
                 className="mt-4 pl-4 border-l-2 border-gray-100 dark:border-neutral-700"
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
