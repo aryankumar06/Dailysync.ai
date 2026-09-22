@@ -347,7 +347,7 @@ export default function HabitSection({ selectedDate }: HabitSectionProps) {
                                 {getHabitIcon(habit.name)}
                                 <span className="truncate max-w-[100px]" title={habit.name}>{habit.name}</span>
                             </div>
-                            <div className="opacity-0 group-hover:opacity-100 flex gap-1 absolute right-2 bg-[#1a1a1a] p-1 rounded-md shadow-sm border border-[#333] z-20">
+                            <div className="opacity-0 group-hover:opacity-100 focus-within:opacity-100 flex gap-1 absolute right-2 bg-[#1a1a1a] p-1 rounded-md shadow-sm border border-[#333] z-20">
                                 <button aria-label={`Edit ${habit.name}`} onClick={() => { setEditingHabit(habit); setFormData({...habit}); setShowForm(true); }} className="hover:text-blue-400 p-1"><Edit2 className="w-3 h-3"/></button>
                                 <button aria-label={`Delete ${habit.name}`} onClick={() => deleteHabit(habit.id)} className="hover:text-red-400 p-1"><Trash2 className="w-3 h-3"/></button>
                             </div>

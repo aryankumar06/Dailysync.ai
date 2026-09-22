@@ -5,3 +5,7 @@
 ## 2026-06-08 - Explicit Context for Icon-Only Action Buttons in Lists
 **Learning:** Icon-only action buttons (like Delete) in nested lists or trees without the item's context in the aria-label are ambiguous to screen reader users.
 **Action:** When adding icon-only action buttons to items in lists, always include the specific item's title in the `aria-label` (e.g., `aria-label="Delete task: [Task Title]"`) to provide explicit context.
+
+## 2026-09-22 - Keyboard Accessibility for Hover-Only Actions
+**Learning:** Actions that only appear on `group-hover` (like delete buttons on list items) are completely inaccessible to keyboard users because they cannot hover to reveal them.
+**Action:** Always add `focus-visible:opacity-100` (or `focus-within:opacity-100` for containers) alongside `group-hover:opacity-100` to ensure interactive elements are visible when focused via keyboard.
