@@ -549,7 +549,7 @@ export default function WorkspaceView() {
                                         <div className="flex-1 min-w-0">
                                             <div className="font-medium truncate">{w.name}</div>
                                         </div>
-                                        <ChevronRight className={`w-4 h-4 ${activeWorkspaceId === w.id ? 'text-white' : 'text-gray-400 opacity-0 group-hover:opacity-100'}`} />
+                                        <ChevronRight className={`w-4 h-4 ${activeWorkspaceId === w.id ? 'text-white' : 'text-gray-400 opacity-0 group-hover:opacity-100 group-focus:opacity-100'}`} />
                                     </div>
                                 </button>
                             ))
@@ -979,7 +979,7 @@ function TaskCard({ task, role, isManager, getMemberName, onUpdateStatus, onDele
                     <button 
                         aria-label={`Delete task: ${task.title}`}
                         onClick={() => onDelete(task.id)}
-                        className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity"
                     >
                         <Trash2 className="w-4 h-4" />
                     </button>

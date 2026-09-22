@@ -401,7 +401,7 @@ export default function InboxView() {
                                     <button 
                                         aria-label={`Delete notification: ${notification.title}`}
                                         onClick={() => deleteNotification(notification.id)}
-                                        className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                                        className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity"
                                     >
                                         <Trash2 className="w-4 h-4" />
                                     </button>
