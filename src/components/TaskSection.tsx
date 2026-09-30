@@ -287,10 +287,16 @@ export default function TaskSection({ selectedDate }: TaskSectionProps) {
           <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Tasks</h2>
           
           {/* View Mode Toggle - Simplified and explicit */}
-          <div className="flex items-center ml-2 bg-gray-100 dark:bg-neutral-800 rounded-lg p-1 border border-gray-200 dark:border-neutral-700">
+          <div
+            className="flex items-center ml-2 bg-gray-100 dark:bg-neutral-800 rounded-lg p-1 border border-gray-200 dark:border-neutral-700"
+            role="group"
+            aria-label="Task view mode"
+          >
             <button
+              type="button"
               onClick={() => setViewMode('list')}
-              className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${
+              aria-pressed={viewMode === 'list'}
+              className={`px-3 py-1 rounded-md text-xs font-bold transition-all focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-blue-500 ${
                 viewMode === 'list' 
                   ? 'bg-blue-600 text-white shadow-sm' 
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
@@ -299,8 +305,10 @@ export default function TaskSection({ selectedDate }: TaskSectionProps) {
               List
             </button>
             <button
+              type="button"
               onClick={() => setViewMode('plan')}
-              className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${
+              aria-pressed={viewMode === 'plan'}
+              className={`px-3 py-1 rounded-md text-xs font-bold transition-all focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-blue-500 ${
                 viewMode === 'plan' 
                   ? 'bg-blue-600 text-white shadow-sm' 
                   : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
@@ -638,8 +646,11 @@ function TaskItem({
               </span>
             )}
             <button 
+                type="button"
                 onClick={() => setShowComments(!showComments)}
-                className="text-xs text-gray-500 hover:text-blue-500 flex items-center gap-1 transition-colors"
+                aria-expanded={showComments}
+                aria-controls={`comments-${task.id}`}
+                className="text-xs text-gray-500 hover:text-blue-500 flex items-center gap-1 transition-colors focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-blue-500 rounded"
                 title="View Comments"
             >
                 <MessageSquare className="w-3 h-3" />
@@ -651,6 +662,7 @@ function TaskItem({
           <AnimatePresence>
             {showComments && (
               <motion.div 
+                id={`comments-${task.id}`}
                 className="mt-4 pl-4 border-l-2 border-gray-100 dark:border-neutral-700"
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
