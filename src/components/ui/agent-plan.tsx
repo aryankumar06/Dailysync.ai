@@ -241,8 +241,10 @@ export default function Plan() {
                   {/* Expand/Collapse */}
                   {hasChildren && (
                     <button
+                      aria-label={isExpanded ? "Collapse project" : "Expand project"}
+                      aria-expanded={isExpanded}
                       onClick={() => toggleExpand(project.id)}
-                      className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                      className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm outline-none"
                     >
                       {isExpanded ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
                     </button>
@@ -250,8 +252,11 @@ export default function Plan() {
 
                   {/* Status Icon - Animated */}
                   <motion.button
+                    aria-label={`Mark project ${project.status === 'completed' ? 'incomplete' : 'complete'}`}
+                    role="switch"
+                    aria-checked={project.status === 'completed'}
                     onClick={() => toggleStatus(project.id, project.status)}
-                    className="flex-shrink-0 hover:opacity-80 transition-opacity"
+                    className="flex-shrink-0 hover:opacity-80 transition-opacity focus-visible:ring-2 focus-visible:ring-blue-500 rounded-full outline-none"
                   >
                     <AnimatePresence mode="wait">
                       <motion.div
@@ -298,7 +303,7 @@ export default function Plan() {
                   <button
                     aria-label={`Delete project: ${project.title}`}
                     onClick={() => deleteItem(project.id)}
-                    className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors"
+                    className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-red-500 outline-none"
                     title="Delete project"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -307,7 +312,7 @@ export default function Plan() {
                   {/* Add Task Button */}
                   <button
                     onClick={() => setAddingTaskTo(project.id)}
-                    className="flex items-center gap-1 px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
+                    className="flex items-center gap-1 px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-blue-500 outline-none focus-visible:ring-offset-1"
                   >
                     <Plus className="w-3 h-3" />
                     Add Task
@@ -372,8 +377,10 @@ export default function Plan() {
                               {/* Expand/Collapse */}
                               {hasSubtasks && (
                                 <button
+                                  aria-label={isTaskExpanded ? "Collapse task" : "Expand task"}
+                                  aria-expanded={isTaskExpanded}
                                   onClick={() => toggleExpand(task.id)}
-                                  className="text-gray-400 hover:text-gray-600"
+                                  className="text-gray-400 hover:text-gray-600 focus-visible:ring-2 focus-visible:ring-blue-500 rounded-sm outline-none"
                                 >
                                   {isTaskExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
                                 </button>
@@ -381,8 +388,11 @@ export default function Plan() {
 
                               {/* Status Icon - Animated */}
                               <motion.button
+                                aria-label={`Mark task ${task.status === 'completed' ? 'incomplete' : 'complete'}`}
+                                role="switch"
+                                aria-checked={task.status === 'completed'}
                                 onClick={() => toggleStatus(task.id, task.status)}
-                                className="flex-shrink-0 hover:opacity-80 transition-opacity"
+                                className="flex-shrink-0 hover:opacity-80 transition-opacity focus-visible:ring-2 focus-visible:ring-blue-500 rounded-full outline-none"
                               >
                                 <AnimatePresence mode="wait">
                                   <motion.div
@@ -417,7 +427,7 @@ export default function Plan() {
                               <button
                                 aria-label={`Delete task: ${task.title}`}
                                 onClick={() => deleteItem(task.id)}
-                                className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors"
+                                className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-red-500 outline-none"
                                 title="Delete task"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
@@ -426,7 +436,7 @@ export default function Plan() {
                               {/* Add Subtask Button */}
                               <button
                                 onClick={() => setAddingSubtaskTo(task.id)}
-                                className="flex items-center gap-1 px-2 py-1 text-xs bg-green-600 hover:bg-green-700 text-white rounded-md"
+                                className="flex items-center gap-1 px-2 py-1 text-xs bg-green-600 hover:bg-green-700 text-white rounded-md focus-visible:ring-2 focus-visible:ring-green-500 outline-none focus-visible:ring-offset-1"
                               >
                                 <Plus className="w-3 h-3" />
                                 Subtask
@@ -484,8 +494,11 @@ export default function Plan() {
                                   {task.subtasks.map((subtask) => (
                                     <div key={subtask.id} className="flex items-center gap-3 py-1">
                                       <motion.button
+                                        aria-label={`Mark subtask ${subtask.status === 'completed' ? 'incomplete' : 'complete'}`}
+                                        role="switch"
+                                        aria-checked={subtask.status === 'completed'}
                                         onClick={() => toggleStatus(subtask.id, subtask.status)}
-                                        className="flex-shrink-0 hover:opacity-80 transition-opacity"
+                                        className="flex-shrink-0 hover:opacity-80 transition-opacity focus-visible:ring-2 focus-visible:ring-blue-500 rounded-full outline-none"
                                       >
                                         <AnimatePresence mode="wait">
                                           <motion.div
@@ -515,7 +528,7 @@ export default function Plan() {
                                       <button
                                         aria-label={`Delete subtask: ${subtask.title}`}
                                         onClick={() => deleteItem(subtask.id)}
-                                        className="p-1 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors"
+                                        className="p-1 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-red-500 outline-none"
                                         title="Delete subtask"
                                       >
                                         <Trash2 className="w-3 h-3" />
